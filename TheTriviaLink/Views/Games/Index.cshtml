@@ -1,0 +1,63 @@
+﻿@model IEnumerable<DataTransfer.Game>
+
+@{
+    ViewData["Title"] = "Trivia Games";
+}
+
+<h1>Trivia Games</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>
+                Code
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Theme
+            </th>
+            <th>
+                Trivia Master
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @{
+                    var dayStyle = item.GameDay > DateTime.Now ? "upcoming" : null;
+                }
+                <span class="@dayStyle">@Html.DisplayFor(modelItem => item.GameDay)</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameTheme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MasterFirstName) 
+                @Html.DisplayFor(modelItem => item.MasterLastName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GameID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GameID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GameID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
