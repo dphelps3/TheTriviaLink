@@ -7,6 +7,7 @@ namespace DataAccess
     public interface IGamesDao
     {
         public Task<List<Game>> GetGamesAsync();
+        public Task<Game> GetGameByIdAsync(int id);
     }
 
     public class GamesDao : IGamesDao
@@ -33,6 +34,20 @@ namespace DataAccess
                 return results?.OrderByDescending(x => x.GameDay).ToList() ?? [];
             }
             catch (Exception ex) 
+            {
+                var errorMessage = ex.Message;
+                throw new Exception(errorMessage);
+            }
+        }
+
+        public async Task<Game> GetGameByIdAsync(int id)
+        {
+            try
+            {
+                var result = await _baseDao.QueryAsync<Game, dynamic>(GamesSql.SelectGameById(), new { id });
+                return result?.FirstOrDefault() ?? new Game();
+            }
+            catch (Exception ex)
             {
                 var errorMessage = ex.Message;
                 throw new Exception(errorMessage);
