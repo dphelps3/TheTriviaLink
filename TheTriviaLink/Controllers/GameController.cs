@@ -38,7 +38,11 @@ namespace TriviaApp.Controllers
             return View(results);
         }
 
+
         // GET: Game/Edit/5
+        //[HttpGet("Edit/{id}")]
+        //public async Task<IActionResult> Game([FromRoute] int? id)
+        //{
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -57,10 +61,10 @@ namespace TriviaApp.Controllers
             return View(game);
         }
 
-        public async Task<IActionResult> Save(Game game)
+        public async Task Save(Game game)
         {
             await _gamesDao.UpdateGame(game);
-            return View(game);
+            //return View(game);
         }
 
         public async Task<IActionResult> Create()
