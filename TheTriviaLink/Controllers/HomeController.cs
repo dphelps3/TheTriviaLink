@@ -20,7 +20,7 @@ namespace TheTriviaLink.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var results = await _gamesDao.GetGamesAsync();
+            var results = await _gamesDao.GetAllGamesAsync();
 
             return View(results);
         }

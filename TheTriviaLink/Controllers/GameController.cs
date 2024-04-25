@@ -20,7 +20,7 @@ namespace TriviaApp.Controllers
         // GET: Game
         public async Task<IActionResult> Index()
         {
-            var results = await _gamesDao.GetGamesAsync();
+            var results = await _gamesDao.GetAllGamesAsync();
 
             return View(results);
         }
@@ -37,6 +37,19 @@ namespace TriviaApp.Controllers
 
             return View(results);
         }
+
+        // POST: Game/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Game game)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await _gamesDao.CreateGameAsync(game);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(game);
+        //}
 
         // GET: Game/Create
         //public async Task<IActionResult> Create()

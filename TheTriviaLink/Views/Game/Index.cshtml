@@ -34,10 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @{
-                    var dayStyle = item.GameDay > DateTime.Now ? "upcoming" : null;
-                }
-                <span class="@dayStyle">@Html.DisplayFor(modelItem => item.GameDay)</span>
+                @item.GameDay.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GameCode)

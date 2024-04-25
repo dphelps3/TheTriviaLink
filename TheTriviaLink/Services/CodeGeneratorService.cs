@@ -55,7 +55,7 @@ namespace TriviaLink.Services
 
         public async Task<bool> GameCodeMatchExisting(string newGameCode)
         {
-            var results = await _baseDao.QueryAsync<Game, dynamic>(GamesSql.SelectGames(), new { });
+            var results = await _baseDao.QueryAsync<Game, dynamic>(GamesSql.SelectAllGames(), new { });
             var existingGameCodes = results.Select(x => x.GameCode).ToList();
 
             if (existingGameCodes.Any(x => x == newGameCode))
