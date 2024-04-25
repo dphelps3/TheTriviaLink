@@ -7,5 +7,6 @@ namespace TriviaApp.Models
     /// </summary>
     public class SessionModel
     {
+
     }
 }

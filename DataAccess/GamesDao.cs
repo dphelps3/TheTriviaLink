@@ -9,6 +9,7 @@ namespace DataAccess
         public Task<List<Game>> GetAllGamesAsync();
         public Task<Game> GetGameByIdAsync(int id);
         //public Task<Game> UpdateGame(BaseDao _baseDao, int id);
+        public Task<Game> UpdateGame(Game game);
         //public Task<Game> CreateGameAsync(Game game);
     }
 
@@ -73,23 +74,24 @@ namespace DataAccess
         //    }
         //}
 
-        //public async Task<Game> UpdateGame(BaseDao _baseDao, int id)
-        //{
-        //    try
-        //    {
-        //        var sql = "UPDATE Game SET GameTheme = @GameTheme WHERE GameID = @Id";
-        //        var parameters = new { GameTheme = "Updated Game Theme", Id = id };
+        public async Task<Game> UpdateGame(Game game)
+        {
+            try
+            {
+                //var sql = $"UPDATE Game SET GameTheme = {game.GameTheme} WHERE GameID = {game.GameID}";
+                //var parameters = new { GameTheme = "Updated Game Theme", Id = id };
+                //await _baseDao.ExecuteAsync(sql);
 
-        //        await _baseDao.ExecuteAsync(sql, parameters);
+                await _baseDao.ExecuteAsync(GamesSql.UpdateGame(), game);
 
-        //        var updatedGame = await _baseDao.QueryFirstOrDefaultAsync<Game>("SELECT * FROM Game WHERE GameID = @Id", new { Id = id });
-        //        return updatedGame;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var errorMessage = ex.Message;
-        //        throw new Exception(errorMessage);
-        //    }
-        //}
+                var updatedGame = await _baseDao.QueryFirstOrDefaultAsync<Game, object>("SELECT * FROM Game WHERE GameID = @Id", new { Id = game.GameID });
+                return updatedGame;
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = ex.Message;
+                throw new Exception(errorMessage);
+            }
+        }
     }
 }

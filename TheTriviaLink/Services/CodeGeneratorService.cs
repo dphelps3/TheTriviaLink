@@ -19,6 +19,19 @@ namespace TriviaLink.Services
             _baseDao = context;
         }
 
+        public async Task<string> GenerateUniqueCode()
+        {
+            string code = string.Empty;
+            bool isMatch = true;
+
+            while (isMatch == true)
+            {
+                code = GenerateCode();
+                isMatch = await GameCodeMatchExisting(code);
+            }
+            return code;
+        }
+
         public static string GenerateCode()
         {
             Random rand = new Random();
@@ -38,19 +51,6 @@ namespace TriviaLink.Services
             }
 
             return str;
-        }
-
-        public async Task<string> GenerateUniqueCode()
-        {
-            string code = string.Empty;
-            bool isMatch = true;
-
-            while (isMatch == true)
-            {
-                code = GenerateCode();
-                isMatch = await GameCodeMatchExisting(code);
-            }
-            return code;
         }
 
         public async Task<bool> GameCodeMatchExisting(string newGameCode)

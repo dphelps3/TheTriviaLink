@@ -47,7 +47,7 @@
                     MasterFirstName = @MasterFirstName,
                     MasterLastName = @MasterLastName,
                     GameCode = @GameCode
-                WHERE GameID = @id
+                WHERE GameID = @GameID
             ";
         }
 

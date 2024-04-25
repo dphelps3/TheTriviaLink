@@ -12,7 +12,7 @@ namespace DataAccess
 
         public Task<T> QueryFirstOrDefaultAsync<T, U>(string sql, U parameters);
 
-        public Task ExecuteAsync<T>(string sql);
+        public Task ExecuteAsync(string sql, object param = null);
     }
 
 
@@ -49,13 +49,13 @@ namespace DataAccess
             }
         }
 
-        public async Task ExecuteAsync<T>(string sql)
+        public async Task ExecuteAsync(string sql, object param = null)
         {
             string? connectionString = _configuration.GetConnectionString(ConnectionStringName);
 
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                await connection.ExecuteAsync(sql);
+                await connection.ExecuteAsync(sql, param);
             }
         }
     }

@@ -38,6 +38,39 @@ namespace TriviaApp.Controllers
             return View(results);
         }
 
+        // GET: Game/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var game = await _gamesDao.GetGameByIdAsync(id.Value);
+            //await _gamesDao.UpdateGame(game);
+
+
+            //var game = await _gamesDao.UpdateGame.FindAsync(id);
+            //if (game == null)
+            //{
+            //    return NotFound();
+            //}
+            return View(game);
+        }
+
+        public async Task<IActionResult> Save(Game game)
+        {
+            await _gamesDao.UpdateGame(game);
+            return View(game);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
+            ViewBag.UniqueCode = uniqueCode;
+
+            return View();
+        }
+
         // POST: Game/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
@@ -49,15 +82,6 @@ namespace TriviaApp.Controllers
         //        return RedirectToAction(nameof(Index));
         //    }
         //    return View(game);
-        //}
-
-        // GET: Game/Create
-        //public async Task<IActionResult> Create()
-        //{
-        //    var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
-        //    ViewBag.UniqueCode = uniqueCode;
-
-        //    return View();
         //}
 
         // POST: Game/Create
@@ -72,22 +96,6 @@ namespace TriviaApp.Controllers
         //        _context.Add(game);
         //        await _context.SaveChangesAsync();
         //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(game);
-        //}
-
-        // GET: Game/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Game == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var game = await _context.Game.FindAsync(id);
-        //    if (game == null)
-        //    {
-        //        return NotFound();
         //    }
         //    return View(game);
         //}
