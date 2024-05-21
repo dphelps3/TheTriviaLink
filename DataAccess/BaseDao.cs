@@ -13,6 +13,8 @@ namespace DataAccess
         public Task<T> QueryFirstOrDefaultAsync<T, U>(string sql, U parameters);
 
         public Task ExecuteAsync(string sql, object param = null);
+
+        public Task<int> ExecuteScalarAsync<T>(string sql, T parameters);
     }
 
 
@@ -56,6 +58,17 @@ namespace DataAccess
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, param);
+            }
+        }
+
+        public async Task<int> ExecuteScalarAsync<T>(string sql, T parameters)
+        {
+            string? connectionString = _configuration.GetConnectionString(ConnectionStringName);
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                var data = await connection.ExecuteScalarAsync<int>(sql, parameters);
+                return data;
             }
         }
     }

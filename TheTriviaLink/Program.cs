@@ -34,4 +34,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/Game" || context.Request.Path == "/Game/")
+    {
+        context.Response.Redirect("/Game/All");
+    }
+    else
+    {
+        await next();
+    }
+});
+
 app.Run();

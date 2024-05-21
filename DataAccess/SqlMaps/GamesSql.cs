@@ -51,12 +51,11 @@
             ";
         }
 
-        public static string CreateGame()
+        public static string InsertGame()
         {
             return $@"
                 INSERT INTO dbo.Game
                     (
-                        GameID
                         GameDay,
                         GameFormat,
                         GameTheme,
@@ -65,9 +64,9 @@
                         MasterLastName,
                         GameCode
                     )
-                    VAL
+                    OUTPUT INSERTED.GameID
+                    VALUES
                     (
-                        @GameID
                         @GameDay,
                         @GameFormat,
                         @GameTheme,
@@ -75,7 +74,7 @@
                         @MasterFirstName,
                         @MasterLastName,
                         @GameCode
-                    )
+                    );
             ";
         }
     }
