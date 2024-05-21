@@ -52,9 +52,17 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.GameID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.GameID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GameID">Delete</a>
+                <a asp-action="DeleteConfirmation" asp-route-id="@item.GameID">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@if (TempData["DeletedGameID"] != null)
+{
+    <script>
+        alert("Game with ID @TempData["DeletedGameID"] has been deleted successfully.");
+    </script>
+    @TempData.Remove("DeletedGameID");
+}

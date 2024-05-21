@@ -10,6 +10,7 @@ namespace DataAccess
         public Task<Game> GetGameByIdAsync(int id);
         public Task<Game> UpdateGame(Game game);
         public Task<Game> CreateGame(Game game);
+        public Task DeleteGame(int id);
     }
 
     public class GamesDao : IGamesDao
@@ -94,13 +95,12 @@ namespace DataAccess
             }
         }
 
-        public async Task Delete(Game game)
+        public async Task DeleteGame(int gameID)
         {
             try
             {
-                var deleteGameSql = @"DELETE FROM Game WHERE GameID = @Id";
+                await _baseDao.ExecuteAsync(GamesSql.DeleteGame(), new { GameID = gameID });
 
-                await _baseDao.ExecuteAsync(deleteGameSql, new { Id = game.GameID });
             }
             catch (Exception ex)
             {

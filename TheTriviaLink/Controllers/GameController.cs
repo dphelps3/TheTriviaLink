@@ -94,6 +94,35 @@ namespace TriviaApp.Controllers
             return View(game);
         }
 
+        // GET: DeleteConfirmation
+        [HttpGet("{id}/DeleteConfirmation")]
+        public async Task<IActionResult> DeleteConfirmation(int id)
+        {
+            var game = await _gamesDao.GetGameByIdAsync(id);
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            return View(game);
+        }
+
+        // POST: Delete
+        [HttpPost("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid GameID");
+            }
+
+            await _gamesDao.DeleteGame(id);
+            TempData["DeletedGameID"] = id;
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // Controller Action to Generate Unique Code
         [HttpGet("/Game/GenerateUniqueCode")]
         public async Task<IActionResult> GenerateUniqueCode()

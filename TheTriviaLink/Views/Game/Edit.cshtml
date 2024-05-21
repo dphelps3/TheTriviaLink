@@ -63,7 +63,12 @@
 
 <script>
     $(document).ready(function () {
+
         $("#regenerateGameCodeButton").click(function () {
+            generateGameCode();
+        });
+
+        function generateGameCode() {
             $.ajax({
                 url: '/Game/GenerateUniqueCode',
                 type: 'GET',
@@ -78,7 +83,7 @@
                     console.error("Error generating code:", textStatus, errorThrown);
                 }
             });
-        });
+        }
     });
 </script>
 

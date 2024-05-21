@@ -77,5 +77,13 @@
                     );
             ";
         }
+
+        public static string DeleteGame()
+        {
+            return $@"
+                DELETE FROM dbo.Game
+                WHERE GameID = @GameID;
+            ";
+        }
     }
 }
