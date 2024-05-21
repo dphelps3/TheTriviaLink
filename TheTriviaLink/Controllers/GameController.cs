@@ -76,10 +76,6 @@ namespace TriviaApp.Controllers
         [HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
-            // include code generator service
-            var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
-            ViewBag.UniqueCode = uniqueCode;
-
             return View();
         }
         

@@ -3,8 +3,6 @@
 
 @{
     ViewData["Title"] = "Create";
-
-    var generatedCode = ViewBag.UniqueCode;
 }
 
 <h1>Create</h1>
@@ -23,8 +21,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="GameCode" class="control-label"></label>
-                <input asp-for="GameCode" class="form-control" value="@generatedCode" disabled />
-                <input type="hidden" asp-for="GameCode" value="@generatedCode" />
+                <input asp-for="GameCode" class="form-control" id="game-code-visible" disabled />
+                <input type="hidden" asp-for="GameCode" id="game-code-hidden" />
+                <button type="button" class="btn btn-info btn-sm" id="regenerateGameCodeButton">Generate New Code</button>
             </div>
             <div class="form-group">
                 <label asp-for="GameFormat" class="control-label"></label>
@@ -61,6 +60,34 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        generateGameCode();
+
+        $("#regenerateGameCodeButton").click(function () {
+            generateGameCode();
+        });
+
+        function generateGameCode() {
+            $.ajax({
+                url: '/Game/GenerateUniqueCode',
+                type: 'GET',
+                success: function (data) {
+
+                    var regeneratedCode = data.uniqueCode;
+
+                    $("#game-code-visible").val(regeneratedCode);
+                    $("#game-code-hidden").val(regeneratedCode);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error generating code:", textStatus, errorThrown);
+                }
+            });
+        }
+    });
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
