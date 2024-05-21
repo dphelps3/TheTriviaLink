@@ -17,8 +17,8 @@ namespace TriviaApp.Controllers
             _codeGeneratorService = codeGeneratorService;
         }
 
+        // GET: /Index
         [HttpGet("Index")]
-        // GET: Games
         public async Task<IActionResult> Index()
         {
             var results = await _gamesDao.GetAllGamesAsync();
@@ -26,6 +26,7 @@ namespace TriviaApp.Controllers
             return View(results);
         }
 
+        // GET: 3/Details
         [HttpGet("{id}/Details")]
         public async Task<IActionResult> Details(int id)
         {
@@ -39,6 +40,7 @@ namespace TriviaApp.Controllers
             return View(game);
         }
 
+        // GET: Edit
         [HttpGet("{id}/Edit")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -49,9 +51,14 @@ namespace TriviaApp.Controllers
                 return NotFound();
             }
 
+            // include code generator service
+            var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
+            ViewBag.UniqueCode = uniqueCode;
+
             return View(game);
         }
 
+        // POST: Edit
         [HttpPost("{id}/Edit")]
         public async Task<IActionResult> Edit(int id, [Bind("GameID,GameDay,GameFormat,GameTheme,GameLocation,MasterFirstName,MasterLastName,GameCode")] Game game)
         {
@@ -69,24 +76,18 @@ namespace TriviaApp.Controllers
             return View(game);
         }
 
-        //[HttpGet("Save")]
-        //public async Task Save(Game game)
-        //{
-        //    await _gamesDao.UpdateGame(game);
-        //    return View(game);
-        //}
-
-        // GET: Game/Create
+        // GET: Create
         [HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
+            // include code generator service
             var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
             ViewBag.UniqueCode = uniqueCode;
 
             return View();
         }
-
-        // POST: Game/Create
+        
+        // POST: Create
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GameDay,GameFormat,GameTheme,GameLocation,MasterFirstName,MasterLastName,GameCode")] Game game)
