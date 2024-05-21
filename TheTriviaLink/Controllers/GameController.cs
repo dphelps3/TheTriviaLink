@@ -27,41 +27,54 @@ namespace TriviaApp.Controllers
         }
 
         [HttpGet("{id}/Details")]
-        // GET: Game/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var results = await _gamesDao.GetGameByIdAsync(id);
+            var game = await _gamesDao.GetGameByIdAsync(id);
 
-            if (results == null)
+            if (game == null)
             {
                 return NotFound();
             }
 
-            return View(results);
+            return View(game);
         }
 
         [HttpGet("{id}/Edit")]
-        // GET: Game/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
+            var game = await _gamesDao.GetGameByIdAsync(id);
+
+            if (game == null)
             {
                 return NotFound();
             }
-            else
-            {
-                var game = await _gamesDao.GetGameByIdAsync(id.Value);
 
-                return View(game);
-            }
+            return View(game);
         }
 
-        [HttpGet("Save")]
-        public async Task Save(Game game)
+        [HttpPost("{id}/Edit")]
+        public async Task<IActionResult> Edit(int id, [Bind("GameID,GameDay,GameFormat,GameTheme,GameLocation,MasterFirstName,MasterLastName,GameCode")] Game game)
         {
-            await _gamesDao.UpdateGame(game);
-            //return View(game);
+            if (id != game.GameID)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _gamesDao.UpdateGame(game);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(game);
         }
+
+        //[HttpGet("Save")]
+        //public async Task Save(Game game)
+        //{
+        //    await _gamesDao.UpdateGame(game);
+        //    return View(game);
+        //}
 
         // GET: Game/Create
         [HttpGet("Create")]
