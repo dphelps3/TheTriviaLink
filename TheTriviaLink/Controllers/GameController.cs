@@ -51,10 +51,6 @@ namespace TriviaApp.Controllers
                 return NotFound();
             }
 
-            // include code generator service
-            var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
-            ViewBag.UniqueCode = uniqueCode;
-
             return View(game);
         }
 
@@ -100,6 +96,14 @@ namespace TriviaApp.Controllers
             }
 
             return View(game);
+        }
+
+        // Controller Action to Generate Unique Code
+        [HttpGet("/Game/GenerateUniqueCode")]
+        public async Task<IActionResult> GenerateUniqueCode()
+        {
+            var uniqueCode = await _codeGeneratorService.GenerateUniqueCode();
+            return Json(new { uniqueCode });
         }
     }
 }
