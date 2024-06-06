@@ -28,10 +28,9 @@ public class GameControllerTests
         var mockGamesDao = new Mock<IGamesDao>();
         mockGamesDao.Setup(repo => repo.GetAllGamesAsync()).ReturnsAsync(GetSampleGames());
 
-        var mockCodeGeneratorService = new Mock<ICodeGeneratorService>();
-        mockCodeGeneratorService.Setup(service => service.GenerateUniqueCode()).ReturnsAsync("GeneratedCode");
+        _mockCodeGeneratorService.Setup(service => service.GenerateUniqueCode()).ReturnsAsync("WXYZ");
 
-        var controller = new GameController(mockGamesDao.Object, mockCodeGeneratorService.Object);
+        var controller = new GameController(mockGamesDao.Object, _mockCodeGeneratorService.Object);
 
         var result = await controller.Index();
 
@@ -40,7 +39,7 @@ public class GameControllerTests
         var model = Assert.IsAssignableFrom<IEnumerable<Game>>(viewResult.ViewData.Model);
         var gamesList = (List<Game>)model;
         Assert.Single(gamesList);
-        Assert.Equal("GeneratedCode", gamesList[0].GameCode);
+        Assert.Equal("WXYZ", gamesList[0].GameCode);
     }
 
     private List<Game> GetSampleGames()
@@ -56,7 +55,7 @@ public class GameControllerTests
                        GameLocation = "Miller Park",
                        MasterFirstName = "Daphne", 
                        MasterLastName = "Vasquez",
-                       GameCode = _mockCodeGeneratorService.Object.GenerateUniqueCode().Result
+                       GameCode = "WXYZ"
             }
         };
     }

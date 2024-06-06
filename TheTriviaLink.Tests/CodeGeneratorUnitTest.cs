@@ -12,7 +12,7 @@ namespace TheTriviaLink.Tests
         {
             // Arrange
             var mockCodeGeneratorService = new Mock<ICodeGeneratorService>();
-            mockCodeGeneratorService.Setup(service => service.GenerateUniqueCode()).ReturnsAsync("1234");
+            mockCodeGeneratorService.Setup(service => service.GenerateUniqueCode()).ReturnsAsync("ABCD");
 
             // Act
             string result = await mockCodeGeneratorService.Object.GenerateUniqueCode();
