@@ -43,7 +43,6 @@ namespace TriviaApp.Controllers
             var user = _userService.LoginUser(username, password);
             if (user != null)
             {
-                FormsAuthentication.SetAuthCookie(user.Username, false);
                 return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError("", "Invalid username or password");
@@ -53,7 +52,6 @@ namespace TriviaApp.Controllers
         [HttpPost]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
     }

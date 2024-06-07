@@ -1,5 +1,6 @@
 using DataAccess;
 using TriviaLink.Services;
+using TriviaApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,13 @@ builder.Services.AddControllersWithViews();
 // Data access
 builder.Services.AddTransient<IBaseDao, BaseDao>();
 builder.Services.AddTransient<IGamesDao, GamesDao>();
+builder.Services.AddTransient<IUsersDao, UsersDao>();
 
 // Code generator service
 builder.Services.AddScoped<ICodeGeneratorService, CodeGeneratorService>();
+
+// User service
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

@@ -13,6 +13,11 @@ namespace TriviaApp.Services
     {
         private readonly IUsersDao _usersDao;
 
+        public UserService(IUsersDao usersDao)
+        {
+            _usersDao = usersDao;
+        }
+
         public void RegisterUser(User user, string password)
         {
             user.PasswordHash = HashPassword(password);

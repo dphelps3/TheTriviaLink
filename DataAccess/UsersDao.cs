@@ -1,6 +1,5 @@
 ﻿using DataAccess.SqlMaps;
 using DataTransfer;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace DataAccess
 {
@@ -18,18 +17,15 @@ namespace DataAccess
         {
             _baseDao = baseDao;
         }
-    }
 
-    public async void AddUser(User user)
-    {
-        try
+        public void AddUser(User user)
         {
-            
+            throw new NotImplementedException();
         }
-    }
 
-    public User GetUserByUsername(string username)
-    {
-
+        public User GetUserByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
